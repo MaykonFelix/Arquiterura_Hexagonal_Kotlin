@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   zookeeper:
+    container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
     networks:
       - broker-kafka
@@ -13,6 +14,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:latest
+    container_name: kafka
     networks:
       - broker-kafka
     depends_on:
@@ -29,6 +31,7 @@ services:
 
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
+    container_name: kafdrop
     networks:
       - broker-kafka
     depends_on:
@@ -40,6 +43,7 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     ports:
       - 27017:27017
@@ -49,6 +53,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: mongo_express
     restart: always
     ports:
       - 8083:8083
@@ -59,7 +64,7 @@ services:
 
   wiremock:
     image: "wiremock/wiremock:latest"
-    container_name: my_wiremock
+    container_name: wiremock
     ports:
       - 8082:8080
     volumes:
