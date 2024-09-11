@@ -4,6 +4,7 @@ package com.dev.hexagonal.adapters.`in`.controller
 import com.dev.hexagonal.adapters.`in`.controller.request.CustomerRequest
 import com.dev.hexagonal.adapters.`in`.controller.response.CustomerResponse
 import com.dev.hexagonal.application.core.domain.Customer
+import com.dev.hexagonal.application.ports.`in`.DeleteCustomerByIdInputPort
 import com.dev.hexagonal.application.ports.`in`.FindCustomerByIdInputPort
 import com.dev.hexagonal.application.ports.`in`.InsertCustomerInputPort
 import com.dev.hexagonal.application.ports.`in`.UpdateCustomerInputPort
@@ -17,6 +18,7 @@ class CustomerController(
     private val insertCustomerInputPort: InsertCustomerInputPort,
     private val findCustomerByIdInputPort: FindCustomerByIdInputPort,
     private val updateCustomerInputPort: UpdateCustomerInputPort,
+    private val deleteCustomerByIdInputPort: DeleteCustomerByIdInputPort
 ) {
 
     @PostMapping
@@ -43,7 +45,12 @@ class CustomerController(
             val customer = Customer(id, name, cpf = cpf)
             updateCustomerInputPort.update(customer, zipCode)
         }
+    }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: String) {
+        deleteCustomerByIdInputPort.delete(id)
     }
 
 
